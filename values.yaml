@@ -26,10 +26,11 @@ livenessProbe:
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 3
-  httpGet:
-    scheme: HTTP
-    path: /worker/health
-    port: 5000
+  exec:
+    command:
+       - sh
+       - -c
+       - curl --fail http://localhost:5000/worker/health
 existingRabbitSecret:
 # Must have the keys:
 #   rabbitmq-username
