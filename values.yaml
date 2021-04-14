@@ -28,9 +28,8 @@ livenessProbe:
   failureThreshold: 3
   exec:
     command:
-       - sh
-       - -c
-       - curl --fail http://localhost:5000/worker/health
+      - curl
+      - http://localhost:5000/worker/health
 existingRabbitSecret:
 # Must have the keys:
 #   rabbitmq-username
