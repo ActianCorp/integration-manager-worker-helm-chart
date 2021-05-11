@@ -32,6 +32,7 @@ livenessProbe:
       - http://localhost:5000/worker/health
 existingRabbitSecret:
 # Must have the keys:
+#   rabbitmq-host
 #   rabbitmq-username
 #   rabbitmq-password
 replicaCount: 1
