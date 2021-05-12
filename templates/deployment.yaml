@@ -110,6 +110,8 @@ spec:
           secretName: {{ template "integration-manager-worker.fullname" . }}
           {{- end }}
           items:
+          - key: rabbitmq-host
+            path: rabbitmq-host
           - key: rabbitmq-username
             path: rabbitmq-username
           - key: rabbitmq-password

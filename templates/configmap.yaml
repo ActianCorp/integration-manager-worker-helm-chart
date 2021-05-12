@@ -19,7 +19,7 @@ data:
     job.results.queue-name={{ .Values.resultsQueue }}
 
     #AMQP Properties
-    queue.host={{ .Values.amqp.host }}
+    queue.host=${rabbitmq-host}
     queue.port={{ .Values.amqp.port }}
     queue.username=${rabbitmq-username}
     queue.password=${rabbitmq-password}
