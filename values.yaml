@@ -7,6 +7,8 @@
 imagePullSecrets: []
 image: actian/datacloud-worker:2.0.5.270
 imagePullPolicy: IfNotPresent
+dcEngineImage: actian/dataconnect-engine:latest
+dcEngineImagePullPolicy: IfNotPresent
 namespaced:
 revisionHistoryLimit: 10
 resultsQueue: JOB_RESULTS
