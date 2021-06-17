@@ -45,6 +45,14 @@ spec:
         {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      initContainers:
+      - name: dataconnect-engine
+        image: {{ .Values.dcEngineImage }}
+        imagePullPolicy: {{ .Values.dcEngineImagePullPolicy }}
+        command: ['sh', '-c', 'cp -RT tmp/actian/engine/di-standalone-engine-* /opt/Actian/engine"]
+        volumeMounts:
+        - name: dataconnect-engine-vol
+          mountPath: /opt/Actian/engine
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -74,8 +82,9 @@ spec:
           mountPath: /opt/Actian/volume
         - name: gcp-secrets
           readOnly: true
-          mountPath: /etc/secrets/gcp  
-
+          mountPath: /etc/secrets/gcp
+        - name: dataconnect-engine-vol
+          mountPath: /opt/Actian/engine
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -119,6 +128,8 @@ spec:
       - name: license-vol
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}-license
+      - name: dataconnect-engine-vol
+        emptyDir: {}
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
       {{- end }}
