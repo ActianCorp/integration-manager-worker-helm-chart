@@ -20,28 +20,6 @@ spec:
       release: {{ .Release.Name | quote }}
   template:
     metadata:
-      annotations:---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ template "integration-manager-worker.fullname" . }}
-  {{- if .Values.namespaced }}
-  namespace: {{ template "integration-manager-worker.namespace" . }}
-  {{- end }}
-  labels:
-    app: integration-manager-worker
-    chart: {{ template "integration-manager-worker.chart" . }}
-    release: {{ .Release.Name | quote }}
-    destinationId: {{ quote .Values.destinationId }}
-spec:
-  replicas: {{ .Values.replicaCount }}
-  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
-  selector:
-    matchLabels:
-      app: integration-manager-worker
-      release: {{ .Release.Name | quote }}
-  template:
-    metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
@@ -67,14 +45,6 @@ spec:
         {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
-      initContainers:
-      - name: dataconnect-engine
-        image: {{ .Values.dcEngineImage }}
-        imagePullPolicy: {{ .Values.dcEngineImagePullPolicy }}
-        command: ['sh', '-c', 'cp -RT tmp/actian/engine/di-standalone-engine-* /opt/Actian/engine"]
-        volumeMounts:
-        - name: dataconnect-engine-vol
-          mountPath: /opt/Actian/engine
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -104,9 +74,8 @@ spec:
           mountPath: /opt/Actian/volume
         - name: gcp-secrets
           readOnly: true
-          mountPath: /etc/secrets/gcp
-        - name: dataconnect-engine-vol
-          mountPath: /opt/Actian/engine
+          mountPath: /etc/secrets/gcp  
+
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -150,8 +119,6 @@ spec:
       - name: license-vol
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}-license
-      - name: dataconnect-engine-vol
-        emptyDir: {}
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
       {{- end }}
