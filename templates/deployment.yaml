@@ -71,7 +71,7 @@ spec:
       - name: dataconnect-engine
         image: {{ .Values.dcEngineImage }}
         imagePullPolicy: {{ .Values.dcEngineImagePullPolicy }}
-        command: ["/bin/sh", "-c", "cp tmp/actian/engine/di-standalone-engine-* /opt/Actian/engine ; done"]
+        command: ['sh', '-c', 'cp -RT tmp/actian/engine/di-standalone-engine-* /opt/Actian/engine"]
         volumeMounts:
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine
