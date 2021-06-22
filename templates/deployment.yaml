@@ -49,20 +49,7 @@ spec:
       - name: dataconnect-engine
         image: {{ .Values.dcEngineImage }}
         imagePullPolicy: {{ .Values.dcEngineImagePullPolicy }}
-        env:
-        - name: IM_DRIVERS_DIR
-          value: /opt/Actian/engine/runtime/di9
-        command:
-        - /bin/sh
-        - -c
-        - |
-          echo "copying standalone-engine-* files from image to /opt/Actian/engine"
-          cp -RT tmp/actian/engine/di-standalone-engine-* /opt/Actian/engine
-          echo "Switch to unixODBC drivers"
-          rm -f ${IM_DRIVERS_DIR}/djodbc3.so ${IM_DRIVERS_DIR}/djodbc35.so
-          ln -s ${IM_DRIVERS_DIR}/djodbc3.unixodbc.so ${IM_DRIVERS_DIR}/djodbc3.so
-          ln -s ${IM_DRIVERS_DIR}/djodbc35.unixodbc.so ${IM_DRIVERS_DIR}/djodbc35.so
-          echo "done..."
+        command: ['sh', 'script.sh']
         volumeMounts:
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine
