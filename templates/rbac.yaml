@@ -10,3 +10,7 @@ metadata:
     chart: {{ template "integration-manager-worker.chart" . }}
     release: {{ .Release.Name | quote }}
     destinationId: {{ quote .Values.destinationId }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
