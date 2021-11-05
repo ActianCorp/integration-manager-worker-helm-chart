@@ -40,10 +40,7 @@ data:
     dataflow.enabled=true
     dataflow.licensePath=${sharedDataPath}/volume/df6.slc
     dataflow.localEngineInstallPath=${sharedDataPath}/dataflow/bin
-    dataflow.localEngineListenerPort=4998
-    dataflow.localEngineRemoteJvmArgs=-Xms64m -Xmx1g -XX:PermSize=64m -XX:MaxPermSize=256m -Dsun.client.defaultConnectTimeout=60000 -Dsun.client.defaultReadTimeout=180000
-    dataflow.allowAllExecutables=true
-    dataflow.executableWhiteList=
+    dataflow.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
     dataflow.charset=utf-8
     dataflow.strictMode=disabled
 
@@ -51,7 +48,7 @@ data:
     engine.iniFilePath=${sharedDataPath}/conf/cosmos.ini
     engine.localEngineInstallPath=${sharedDataPath}/engine/runtime/di9
     engine.localEngineListenerPort=4999
-    engine.localEngineRemoteJvmArgs=-Xms64m -Xmx1g -XX:PermSize=64m -XX:MaxPermSize=256m -Dsun.client.defaultConnectTimeout=60000 -Dsun.client.defaultReadTimeout=180000
+    engine.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
     engine.allowAllExecutables=false
     #engine.executableWhiteList=
 
@@ -68,6 +65,10 @@ metadata:
   {{- end }}
   name: {{ template "integration-manager-worker.fullname" . }}-license
 data:
+{{- if .Values.dc12license }}  
+  dc12.slc: |
+    {{ .Values.license | toString | indent 4 | trim }}
+{{- end }} 
 {{- if .Values.license }}  
   dc11.slc: |
     {{ .Values.license | toString | indent 4 | trim }}
