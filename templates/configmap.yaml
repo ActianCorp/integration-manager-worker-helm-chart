@@ -67,7 +67,7 @@ metadata:
 data:
 {{- if .Values.dc12license }}  
   dc12.slc: |
-    {{ .Values.license | toString | indent 4 | trim }}
+    {{ .Values.dc12license | toString | indent 4 | trim }}
 {{- end }} 
 {{- if .Values.license }}  
   dc11.slc: |
