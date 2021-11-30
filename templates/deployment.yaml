@@ -45,11 +45,16 @@ spec:
         {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      enableServiceLinks: false
       initContainers:
       - name: dataconnect-engine
         image: {{ .Values.dcEngineImage }}
         imagePullPolicy: {{ .Values.dcEngineImagePullPolicy }}
         command: ['sh', 'script.sh']
+        securityContext:
+          {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
         volumeMounts:
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine
@@ -70,6 +75,8 @@ spec:
               # Stop worker from picking up more jobs and send SIGKILL once /worker/poke is no longer available (All jobs have completed)
               # Added sleep 30 at start to allow enough time for container to start up
               command: ["/bin/sh", "-c", "sleep 30 && if [ $(curl -X 'DELETE' -I --silent -o /dev/null -w %{http_code} http://localhost:5000/worker/shutdown) == 202 ] ; then until [[ $(curl -I --silent -o /dev/null -w %{http_code} http://localhost:5000/worker/poke) != 200  ]] ;do printf '.'; sleep 5; done; else kill -11 1; fi;"]
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
         volumeMounts:
         - name: worker-config
           readOnly: true
@@ -85,6 +92,12 @@ spec:
           mountPath: /etc/secrets/gcp
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine
+        - name: tmp
+          mountPath: /tmp
+          readOnly: false
+        - name: job-workspace
+          mountPath: /opt/Actian/local
+          readOnly: false
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -107,7 +120,7 @@ spec:
           secretName: {{ .Values.existingGcpSecret }}
           {{- else }}
           secretName: {{ template "integration-manager-worker.fullname" . }}-gcp
-          {{- end }}          
+          {{- end }}
       - name: worker-config
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}
@@ -129,6 +142,10 @@ spec:
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}-license
       - name: dataconnect-engine-vol
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      - name: job-workspace
         emptyDir: {}
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
