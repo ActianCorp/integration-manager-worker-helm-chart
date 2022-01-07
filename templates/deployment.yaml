@@ -98,6 +98,9 @@ spec:
         - name: job-workspace
           mountPath: /opt/Actian/local
           readOnly: false
+        - name: app-config
+          mountPath: /opt/Actian/conf
+          readOnly: false
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -146,6 +149,8 @@ spec:
       - name: tmp
         emptyDir: {}
       - name: job-workspace
+        emptyDir: {}
+      - name: app-config
         emptyDir: {}
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
