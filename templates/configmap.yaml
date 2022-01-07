@@ -46,6 +46,7 @@ data:
 
     # Engine Configuration (for this Worker)
     engine.iniFilePath=${sharedDataPath}/conf/cosmos.ini
+    engine.licensePath=${sharedDataPath}/license/cosmos.slc
     engine.localEngineInstallPath=${sharedDataPath}/engine/runtime/di9
     engine.localEngineListenerPort=4999
     engine.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
