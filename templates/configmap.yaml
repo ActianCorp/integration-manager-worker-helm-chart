@@ -46,6 +46,7 @@ data:
 
     # Engine Configuration (for this Worker)
     engine.iniFilePath=${sharedDataPath}/conf/cosmos.ini
+    engine.licensePath=${sharedDataPath}/volume/cosmos.slc
     engine.localEngineInstallPath=${sharedDataPath}/engine/runtime/di9
     engine.localEngineListenerPort=4999
     engine.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
@@ -66,7 +67,7 @@ metadata:
   name: {{ template "integration-manager-worker.fullname" . }}-license
 data:
 {{- if .Values.dc12license }}  
-  dc12.slc: |
+  cosmos.slc: |
     {{ .Values.dc12license | toString | indent 4 | trim }}
 {{- end }} 
 {{- if .Values.license }}  
