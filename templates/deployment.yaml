@@ -57,7 +57,18 @@ spec:
           {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
         volumeMounts:
         - name: dataconnect-engine-vol
-          mountPath: /opt/Actian/engine
+          mountPath: /opt/Actian/engine 
+      {{- if .Values.logstream.enabled }}    
+      - name: init-enginelog
+        image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
+          imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
+          command: ['sh', '-c', 'chown -R 1000:2000 /opt']
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 10 }}
+          volumeMounts:
+            - name: enginelog
+              mountPath: /opt/Actian/local/work/job 
+      {{- end }}
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -97,6 +108,9 @@ spec:
           readOnly: false
         - name: job-workspace
           mountPath: /opt/Actian/local
+          readOnly: false
+        - name: enginelog
+          mountPath: /opt/Actian/local/work/job
           readOnly: false
         - name: app-config
           mountPath: /opt/Actian/conf
@@ -149,6 +163,8 @@ spec:
       - name: tmp
         emptyDir: {}
       - name: job-workspace
+        emptyDir: {}
+      - name: enginelog
         emptyDir: {}
       - name: app-config
         emptyDir: {}
