@@ -62,9 +62,9 @@ spec:
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
           imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
-          command: ['sh', '-c', 'chown -R 1000:2000 /opt']
+          command: ['sh', '-c', 'chown -R 1000:2000 /opt/Actian/local/work/job']
           securityContext:
-            {{- toYaml .Values.podSecurityContext | nindent 10 }}
+            {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
           volumeMounts:
             - name: enginelog
               mountPath: /opt/Actian/local/work/job 
