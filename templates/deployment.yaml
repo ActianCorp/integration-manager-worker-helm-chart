@@ -58,7 +58,7 @@ spec:
         volumeMounts:
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine 
-      {{- if .Values.logstream.enabled }}    
+        {{- if .Values.logstream.enabled }}    
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
           imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
@@ -68,7 +68,7 @@ spec:
           volumeMounts:
             - name: job-workspace
               mountPath: /opt/Actian/local
-      {{- end }}
+        {{- end }}
       containers:
       - name: worker
         image: {{ .Values.image }}
