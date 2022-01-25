@@ -57,17 +57,17 @@ spec:
           {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
         volumeMounts:
         - name: dataconnect-engine-vol
-          mountPath: /opt/Actian/engine 
-        {{- if .Values.logstream.enabled }}    
+          mountPath: /opt/Actian/engine
+        {{- if .Values.logstream.enabled }}
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
-          imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
-          command: ['sh', '-c', 'chown -R 1000:3000 /opt/Actian/local']
-          securityContext:
-            {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
-          volumeMounts:
-            - name: job-workspace
-              mountPath: /opt/Actian/local
+        imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
+        command: ['sh', '-c', 'chown -R 1000:3000 /opt/Actian/local']
+        securityContext:
+          {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
+        volumeMounts:
+        - name: job-workspace
+          mountPath: /opt/Actian/local
         {{- end }}
       containers:
       - name: worker
