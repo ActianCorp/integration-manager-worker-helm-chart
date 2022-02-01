@@ -64,7 +64,7 @@ spec:
         imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
         command: ['sh', '-c', 'chown -R 1000:3000 /opt/Actian/local']
         securityContext:
-          {{- toYaml .Values.dcEngineSecurityContext | nindent 10 }}
+          {{- toYaml .Values.engineLogSecurityContext | nindent 10 }}
         volumeMounts:
         - name: job-workspace
           mountPath: /opt/Actian/local
