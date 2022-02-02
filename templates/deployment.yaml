@@ -66,7 +66,7 @@ spec:
         securityContext:
           {{- toYaml .Values.engineLogSecurityContext | nindent 10 }}
         volumeMounts:
-        - name: job-workspace
+        - name: enginelog
           mountPath: /opt/Actian/local/work/job
         {{- end }}
       containers:
@@ -107,11 +107,15 @@ spec:
           mountPath: /tmp
           readOnly: false
         - name: job-workspace
-          mountPath: /opt/Actian/local/work/job
+          mountPath: /opt/Actian/local
           readOnly: false
         - name: app-config
           mountPath: /opt/Actian/conf
           readOnly: false
+        - name: enginelog  
+          mountPath: /opt/Actian/local/work/job
+          readOnly: false
+               
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -160,10 +164,14 @@ spec:
       - name: tmp
         emptyDir: {}
       - name: job-workspace
-        hostPath:
-          path: /var/log/Actian/local/work/job
+        emptyDir: {}
       - name: app-config
         emptyDir: {}
+      - name: enginelog  
+        hostPath:
+          path: /var/log/Actian/local/work/job
+          type: ''
+    
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
       {{- end }}
