@@ -62,12 +62,12 @@ spec:
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
         imagePullPolicy: {{ .Values.busybox.image.pullPolicy }}
-        command: ['sh', '-c', 'chown -R 1000:3000 /opt/Actian/local']
+        command: ['sh', '-c', 'chown -R 1000:3000 /opt/Actian/local/work/job']
         securityContext:
           {{- toYaml .Values.engineLogSecurityContext | nindent 10 }}
         volumeMounts:
-        - name: job-workspace
-          mountPath: /opt/Actian/local
+        - name: enginelog
+          mountPath: /opt/Actian/local/work/job
         {{- end }}
       containers:
       - name: worker
@@ -112,6 +112,10 @@ spec:
         - name: app-config
           mountPath: /opt/Actian/conf
           readOnly: false
+        - name: enginelog  
+          mountPath: /opt/Actian/local/work/job
+          readOnly: false
+               
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -163,6 +167,15 @@ spec:
         emptyDir: {}
       - name: app-config
         emptyDir: {}
+      - name: enginelog 
+        {{- if .Values.logstream.enabled }} 
+        hostPath:
+          path: {{ .Values.logstream.hostPath }}
+          type: '' 
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
       {{- end }}

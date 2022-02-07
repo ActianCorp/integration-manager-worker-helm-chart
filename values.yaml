@@ -128,3 +128,17 @@ dcEngineSecurityContext: {}
 #  #fsGroupChangePolicy: "OnRootMismatch"
 #  runAsNonRoot: true
 #  readOnlyRootFilesystem: true
+
+engineLogSecurityContext:
+  #  privileged: false
+  #  runAsUser: 0
+  #  runAsNonRoot: false
+
+logstream:
+  enabled: false
+  hostPath: "/opt/Actian/local/work/job"
+busybox:
+  image:
+    repository: busybox
+    tag: 1.30.1
+    pullPolicy: IfNotPresent
