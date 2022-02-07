@@ -167,7 +167,8 @@ spec:
         emptyDir: {}
       - name: app-config
         emptyDir: {}
-      - name: enginelog  
+      - name: enginelog 
+        {{- if .Values.logstream.enabled }} 
         hostPath:
           {{- if .Values.platform.gcp }}
           path: /var/log/Actian/local/work/job
@@ -175,6 +176,10 @@ spec:
           path: /opt/Actian/local/work/job
           {{- end }}
           type: '' 
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
       {{- end }}
