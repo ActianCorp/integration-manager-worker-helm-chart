@@ -66,8 +66,6 @@ spec:
         securityContext:
           {{- toYaml .Values.engineLogSecurityContext | nindent 10 }}
         volumeMounts:
-        - name: job-workspace
-          mountPath: /opt/Actian/local
         - name: enginelog
           mountPath: /opt/Actian/local/work/job
         {{- end }}
