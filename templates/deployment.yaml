@@ -170,11 +170,7 @@ spec:
       - name: enginelog 
         {{- if .Values.logstream.enabled }} 
         hostPath:
-          {{- if .Values.platform.gcp }}
-          path: /var/log/Actian/local/work/job
-          {{- else }}
-          path: /opt/Actian/local/work/job
-          {{- end }}
+          path: {{ .Values.logstream.hostPath }}
           type: '' 
         {{- else }}
         emptyDir: {}
