@@ -129,7 +129,7 @@ dcEngineSecurityContext: {}
 #  runAsNonRoot: true
 #  readOnlyRootFilesystem: true
 
-  engineLogSecurityContext:
+engineLogSecurityContext:
   #  privileged: false
   #  runAsUser: 0
   #  runAsNonRoot: false
