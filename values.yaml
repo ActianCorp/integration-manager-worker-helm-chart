@@ -5,9 +5,9 @@
 #imagePullSecrets:
 #  - actian-registrykey
 imagePullSecrets: []
-image: actian/datacloud-worker:2.0.5.270_New
+image: actian/datacloud-worker:3.0.3-rc
 imagePullPolicy: IfNotPresent
-dcEngineImage: actian/dataconnect-engine:11.6.0-98
+dcEngineImage: actian/dataconnect-engine:12.0.0-31
 dcEngineImagePullPolicy: IfNotPresent
 namespaced:
 revisionHistoryLimit: 10
