@@ -58,6 +58,16 @@ spec:
         volumeMounts:
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine
+      - name: dataflow-engine
+        image: {{ .Values.dfEngineImage }}
+        imagePullPolicy: {{ .Values.dfEngineImagePullPolicy }}
+        command: ["/bin/sh","-c"]
+        args: ["chmod +x script.sh && ./script.sh; chmod -R 755 /opt/Actian/dataflow/conf"]
+        securityContext:
+          {{- toYaml .Values.dfEngineSecurityContext | nindent 10 }}
+        volumeMounts:
+        - name: dataflow-engine-vol
+          mountPath: /opt/Actian/dataflow
         {{- if .Values.logstream.enabled }}
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
@@ -112,8 +122,11 @@ spec:
         - name: app-config
           mountPath: /opt/Actian/conf
           readOnly: false
-        - name: enginelog  
+        - name: enginelog
           mountPath: /opt/Actian/local/work/job
+          readOnly: false
+        - name: dataflow-engine-vol
+          mountPath: /opt/Actian/dataflow
           readOnly: false
                
         {{- if .Values.extraVolumeMounts }}
@@ -160,6 +173,8 @@ spec:
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}-license
       - name: dataconnect-engine-vol
+        emptyDir: {}
+      - name: dataflow-engine-vol
         emptyDir: {}
       - name: tmp
         emptyDir: {}
