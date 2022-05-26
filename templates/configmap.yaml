@@ -38,7 +38,7 @@ data:
     
     # Dataflow Configuration
     dataflow.enabled=true
-    dataflow.licensePath=${sharedDataPath}/volume/df6.slc
+    dataflow.licensePath=${sharedDataPath}/volume/cosmos.slc
     dataflow.localEngineInstallPath=${sharedDataPath}/dataflow/bin
     dataflow.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
     dataflow.charset=utf-8
