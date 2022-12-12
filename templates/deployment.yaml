@@ -79,7 +79,7 @@ spec:
         - name: enginelog
           mountPath: /opt/Actian/local/work/job
         {{- end }}
-      - name: init-dcOdbc
+      - name: init-dcodbc
         image: {{ .Values.dcOdbcImage }}
         imagePullPolicy: {{ .Values.dcOdbcImagePullPolicy }}
         command: ['sh', 'script.sh']
