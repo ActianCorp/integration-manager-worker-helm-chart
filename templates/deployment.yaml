@@ -87,7 +87,7 @@ spec:
           {{- toYaml .Values.dcOdbcSecurityContext | nindent 10 }}
         volumeMounts:
         - name: datacloud-odbc-vol
-          mountPath: /opt/Actian/dcOdbc
+          mountPath: /opt/Actian/datacloud-odbc
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -138,7 +138,7 @@ spec:
           mountPath: /opt/Actian/dataflow
           readOnly: false
         - name: datacloud-odbc-vol
-          mountPath: /opt/Actian/dcOdbc
+          mountPath: /opt/Actian/datacloud-odbc
           readOnly: false
                
         {{- if .Values.extraVolumeMounts }}
