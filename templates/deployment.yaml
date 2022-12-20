@@ -79,6 +79,15 @@ spec:
         - name: enginelog
           mountPath: /opt/Actian/local/work/job
         {{- end }}
+      - name: init-dcodbc
+        image: {{ .Values.dcOdbcImage }}
+        imagePullPolicy: {{ .Values.dcOdbcImagePullPolicy }}
+        command: ['sh', 'script.sh']
+        securityContext:
+          {{- toYaml .Values.dcOdbcSecurityContext | nindent 10 }}
+        volumeMounts:
+        - name: datacloud-odbc-vol
+          mountPath: /opt/Actian/datacloud-odbc
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -128,6 +137,9 @@ spec:
         - name: dataflow-engine-vol
           mountPath: /opt/Actian/dataflow
           readOnly: false
+        - name: datacloud-odbc-vol
+          mountPath: /opt/Actian/datacloud-odbc
+          readOnly: false
                
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
@@ -175,6 +187,8 @@ spec:
       - name: dataconnect-engine-vol
         emptyDir: {}
       - name: dataflow-engine-vol
+        emptyDir: {}
+      - name: datacloud-odbc-vol
         emptyDir: {}
       - name: tmp
         emptyDir: {}
