@@ -58,6 +58,15 @@ spec:
         volumeMounts:
         - name: dataconnect-engine-vol
           mountPath: /opt/Actian/engine
+      - name: link-engine
+        image: {{ .Values.linkEngineImage }}
+        imagePullPolicy: {{ .Values.linkEngineImagePullPolicy }}
+        command: [ "/bin/sh","-c","/opt/install/install_flowcmdserver_standalone_installation_dist.sh && chown -R 1000:1000 /opt/link/" ]
+        securityContext:
+          {{- toYaml .Values.linkEngineSecurityContext | nindent 10 }}
+        volumeMounts:
+        - name: link-engine-vol
+          mountPath: /opt/link/flowcmdserver_standalone_installation
       - name: dataflow-engine
         image: {{ .Values.dfEngineImage }}
         imagePullPolicy: {{ .Values.dfEngineImagePullPolicy }}
@@ -137,6 +146,9 @@ spec:
         - name: dataflow-engine-vol
           mountPath: /opt/Actian/dataflow
           readOnly: false
+        - name: link-engine-vol
+          mountPath: /opt/link/flowcmdserver_standalone_installation
+          readOnly: false
         - name: datacloud-odbc-vol
           mountPath: /opt/Actian/datacloud-odbc
           readOnly: false
@@ -187,6 +199,8 @@ spec:
       - name: dataconnect-engine-vol
         emptyDir: {}
       - name: dataflow-engine-vol
+        emptyDir: {}
+      - name: link-engine-vol
         emptyDir: {}
       - name: datacloud-odbc-vol
         emptyDir: {}
