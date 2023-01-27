@@ -46,6 +46,7 @@ data:
     
     # Link Flow Command Server
     link.enabled=true
+    link.localEngineInstallPath=/opt/link/flowcmdserver_standalone_installation/bin
 
     # Engine Configuration (for this Worker)
     engine.iniFilePath=${sharedDataPath}/conf/cosmos.ini
