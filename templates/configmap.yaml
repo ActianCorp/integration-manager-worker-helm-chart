@@ -43,6 +43,9 @@ data:
     dataflow.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
     dataflow.charset=utf-8
     dataflow.strictMode=disabled
+    
+    # Link Flow Command Server
+    link.enabled=true
 
     # Engine Configuration (for this Worker)
     engine.iniFilePath=${sharedDataPath}/conf/cosmos.ini
