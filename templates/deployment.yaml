@@ -185,7 +185,7 @@ spec:
           {{- end }}
       - name: worker-shared-volume
         configMap:
-          name: {{ template "integration-manager-worker.fullname" . }}-shared
+          name: {{ template "integration-manager-worker.fullname" . }}
       - name: secret-volume
         secret:
           {{- if .Values.existingSecret }}
