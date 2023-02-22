@@ -120,11 +120,9 @@ spec:
         - name: worker-shared-volume
           readOnly: true
           mountPath: /etc/config
-        {{- if .Values.existingSecret }}
         - name: secret-volume
           readOnly: true
           mountPath: /etc/secrets
-        {{- end }}
         {{- if .Values.existingRabbitSecret }}
         - name: amqp-secret-volume
           readOnly: true
