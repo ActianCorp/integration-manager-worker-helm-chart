@@ -20,6 +20,7 @@ The following table lists the configurable parameters of the integration-manager
 | `image` | image to pull | actian/datacloud-worker:2.0.5.270 |
 | `imagePullPolicy` | When to pull image | IfNotPresent |
 | `namespaced` | true / false : whether you want worker to run in its own namespace. If namespaced, namespace = \"\[destinationId\]-\[ReleaseName\]\" | false |
+| `existingSecret` | name of existing secret | nil |
 | `existingRabbitSecret` | name of RabbitMQ secret that already exists | nil |
 | `existingGcpSecret` | name of Google Cloud secret that already exists | nil |
 | `replicaCount` | number of pods to run | 1 |

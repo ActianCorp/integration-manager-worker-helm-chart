@@ -39,6 +39,7 @@ existingRabbitSecret:
 #   rabbitmq-host
 #   rabbitmq-username
 #   rabbitmq-password
+existingSecret: ""
 replicaCount: 1
 pdb: {}
   #minReplicas: 1

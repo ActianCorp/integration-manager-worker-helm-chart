@@ -117,12 +117,19 @@ spec:
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
         volumeMounts:
-        - name: worker-config
+        - name: worker-shared-volume
           readOnly: true
           mountPath: /etc/config
+        {{- if .Values.existingSecret }}
         - name: secret-volume
           readOnly: true
           mountPath: /etc/secrets
+        {{- end }}
+        {{- if .Values.existingRabbitSecret }}
+        - name: amqp-secret-volume
+          readOnly: true
+          mountPath: /etc/secrets/amqp
+        {{- end }}
         - name: license-vol
           readOnly: true
           mountPath: /opt/Actian/volume
@@ -176,16 +183,20 @@ spec:
           {{- else }}
           secretName: {{ template "integration-manager-worker.fullname" . }}-gcp
           {{- end }}
-      - name: worker-config
+      - name: worker-shared-volume
         configMap:
-          name: {{ template "integration-manager-worker.fullname" . }}
+          name: {{ template "integration-manager-worker.fullname" . }}-shared
       - name: secret-volume
         secret:
-          {{- if .Values.existingRabbitSecret }}
-          secretName: {{ .Values.existingRabbitSecret }}
+          {{- if .Values.existingSecret }}
+          secretName: {{ .Values.existingSecret }}
           {{- else }}
           secretName: {{ template "integration-manager-worker.fullname" . }}
           {{- end }}
+      {{- if .Values.existingRabbitSecret }}
+      - name: amqp-secret-volume
+        secret:
+          secretName: {{ .Values.existingRabbitSecret }}
           items:
           - key: rabbitmq-host
             path: rabbitmq-host
@@ -193,6 +204,7 @@ spec:
             path: rabbitmq-username
           - key: rabbitmq-password
             path: rabbitmq-password
+      {{- end }}
       - name: license-vol
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}-license
