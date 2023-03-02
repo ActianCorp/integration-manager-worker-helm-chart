@@ -99,7 +99,6 @@ spec:
           mountPath: /opt/Actian/Actian_Client
         - name: datacloud-odbcinst-vol
           mountPath: /etc/odbcinst.ini
-          subPath: odbcinst.ini
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -162,7 +161,6 @@ spec:
           readOnly: false
         - name: datacloud-odbcinst-vol
           mountPath: /etc/odbcinst.ini
-          subPath: odbcinst.ini
           readOnly: false          
           
                
@@ -223,7 +221,9 @@ spec:
       - name: datacloud-odbc-vol
         emptyDir: {}
       - name: datacloud-odbcinst-vol
-        emptyDir: {}    
+        hostPath:
+          path: /etc/odbcinst.ini
+          type: ''  
       - name: tmp
         emptyDir: {}
       - name: job-workspace
