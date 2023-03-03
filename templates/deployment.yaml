@@ -97,6 +97,8 @@ spec:
         volumeMounts:
         - name: datacloud-odbc-vol
           mountPath: /opt/Actian/Actian_Client
+        - name: datacloud-odbcinst-vol
+          mountPath: /opt/Actian/odbcconfig  
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -157,7 +159,10 @@ spec:
         - name: datacloud-odbc-vol
           mountPath: /opt/Actian/Actian_Client
           readOnly: false
-               
+        - name: datacloud-odbcinst-vol
+          mountPath: /opt/Actian/odbcconfig
+          readOnly: false
+     
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -213,7 +218,9 @@ spec:
       - name: link-engine-vol
         emptyDir: {}
       - name: datacloud-odbc-vol
-        emptyDir: {} 
+        emptyDir: {}
+      - name: datacloud-odbcinst-vol
+        emptyDir: {}
       - name: tmp
         emptyDir: {}
       - name: job-workspace
