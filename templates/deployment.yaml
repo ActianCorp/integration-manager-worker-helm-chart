@@ -95,13 +95,13 @@ spec:
         securityContext:
           {{- toYaml .Values.dcOdbcSecurityContext | nindent 10 }}
         volumeMounts:
-        - name: datacloud-odbc-avalanche
+        - name: datacloud-odbc-avalanche-vol
           mountPath: /opt/Actian/Actian_Client
-        - name: datacloud-odbc-amazon
+        - name: datacloud-odbc-amazon-vol
           mountPath: /opt/amazon
-        - name: datacloud-odbc-microsoft
+        - name: datacloud-odbc-microsoft-vol
           mountPath: /opt/microsoft
-        - name: datacloud-odbc-mssql-tools
+        - name: datacloud-odbc-mssqltools-vol
           mountPath: /opt/mssql-tools
       containers:
       - name: worker
@@ -160,16 +160,16 @@ spec:
         - name: link-engine-vol
           mountPath: /opt/link/flowcmdserver_standalone_installation
           readOnly: false
-        - name: datacloud-odbc-avalanche
+        - name: datacloud-odbc-avalanche-vol
           mountPath: /opt/Actian/Actian_Client
           readOnly: false
-        - name: datacloud-odbc-amazon
+        - name: datacloud-odbc-amazon-vol
           mountPath: /opt/amazon
           readOnly: false
-        - name: datacloud-odbc-microsoft
+        - name: datacloud-odbc-microsoft-vol
           mountPath: /opt/microsoft
           readOnly: false
-        - name: datacloud-odbc-mssql-tools
+        - name: datacloud-odbc-mssqltools-vol
           mountPath: /opt/mssql-tools
           readOnly: false
      
@@ -227,13 +227,13 @@ spec:
         emptyDir: {}
       - name: link-engine-vol
         emptyDir: {}
-      - datacloud-odbc-avalanche
+      - name: datacloud-odbc-avalanche-vol
         emptyDir: {}
-      - name: datacloud-odbc-amazon
+      - name: datacloud-odbc-amazon-vol
         emptyDir: {}
-      - name: datacloud-odbc-microsoft
+      - name: datacloud-odbc-microsoft-vol
         emptyDir: {}
-      - name: datacloud-odbc-mssql-tools
+      - name: datacloud-odbc-mssqltools-vol
         emptyDir: {}
       - name: tmp
         emptyDir: {}
