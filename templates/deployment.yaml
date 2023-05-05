@@ -61,7 +61,7 @@ spec:
       - name: link-engine
         image: {{ .Values.linkEngineImage }}
         imagePullPolicy: {{ .Values.linkEngineImagePullPolicy }}
-        command: [ "/bin/sh","-c","/opt/install/install_flowcmdserver_standalone_installation_dist.sh && chown -R 1000:1000 /opt/link/" ]
+        command: [ "/bin/sh","-c","/opt/install/install_flowcmdserver_standalone_installation_dist.sh && chown -R 1000:1000 /opt/Actian/link/" ]
         securityContext:
           {{- toYaml .Values.linkEngineSecurityContext | nindent 10 }}
         volumeMounts:
