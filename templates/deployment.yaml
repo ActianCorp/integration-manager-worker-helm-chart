@@ -97,6 +97,8 @@ spec:
         volumeMounts:
         - name: datacloud-odbc-avalanche-vol
           mountPath: /opt/Actian/Actian_Client
+        - name: datacloud-jdbc-avalanche-vol
+          mountPath: /opt/Actian/lib/jdbc
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -106,6 +108,8 @@ spec:
           value: {{ template "integration-manager-worker.fullname" . }}
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/secrets/gcp/gcp-secret
+        - name: JDBC_LIB_PATH
+          value: /opt/Actian/lib/jdbc
         ports:
         - containerPort: 5000
         lifecycle:
@@ -156,6 +160,9 @@ spec:
           readOnly: false
         - name: datacloud-odbc-avalanche-vol
           mountPath: /opt/Actian/Actian_Client
+          readOnly: false
+        - name: datacloud-jdbc-avalanche-vol
+          mountPath: /opt/Actian/lib/jdbc
           readOnly: false
      
         {{- if .Values.extraVolumeMounts }}
@@ -213,6 +220,8 @@ spec:
       - name: link-engine-vol
         emptyDir: {}
       - name: datacloud-odbc-avalanche-vol
+        emptyDir: {}
+      - name: datacloud-jdbc-avalanche-vol
         emptyDir: {}
       - name: tmp
         emptyDir: {}
