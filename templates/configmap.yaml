@@ -60,29 +60,4 @@ data:
     {{- if .Values.extraConfig }}
     {{ .Values.extraConfig | indent 4 | trim }}
     {{- end }}
-
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  {{- if .Values.namespaced }}
-  namespace: {{ template "integration-manager-worker.namespace" . }}
-  {{- end }}
-  name: {{ template "integration-manager-worker.fullname" . }}-license
-data:
-{{- if .Values.dc12license }}  
-  cosmos.slc: |
-    {{ .Values.dc12license | toString | indent 4 | trim }}
-{{- end }} 
-{{- if .Values.license }}  
-  dc11.slc: |
-    {{ .Values.license | toString | indent 4 | trim }}
-{{- end }}
-{{- if .Values.dflicense }}    
-  df6.slc: |
-    {{ .Values.dflicense | toString | indent 4 | trim }}
-{{- end }}   
-{{- if .Values.googleApplicationCredentials }}    
-  aflGAC.key: |
-    {{ .Values.googleApplicationCredentials | toString | indent 4 | trim }}
-{{- end }}   

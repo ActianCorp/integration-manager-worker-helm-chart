@@ -164,7 +164,7 @@ spec:
         - name: datacloud-jdbc-avalanche-vol
           mountPath: /opt/Actian/lib/jdbc
           readOnly: false
-     
+
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -211,8 +211,12 @@ spec:
             path: rabbitmq-password
       {{- end }}
       - name: license-vol
-        configMap:
-          name: {{ template "integration-manager-worker.fullname" . }}-license
+        secret:
+          {{- if .Values.existingLicenseSecret }}
+          secretName: {{ .Values.existingLicenseSecret }}
+          {{- else }}
+          secretName: {{ template "integration-manager-worker.fullname" . }}-license
+          {{- end }}
       - name: dataconnect-engine-vol
         emptyDir: {}
       - name: dataflow-engine-vol
@@ -229,11 +233,11 @@ spec:
         emptyDir: {}
       - name: app-config
         emptyDir: {}
-      - name: enginelog 
-        {{- if .Values.logstream.enabled }} 
+      - name: enginelog
+        {{- if .Values.logstream.enabled }}
         hostPath:
           path: {{ .Values.logstream.hostPath }}
-          type: '' 
+          type: ''
         {{- else }}
         emptyDir: {}
         {{- end }}

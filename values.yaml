@@ -68,11 +68,13 @@ amqp:
   password:
   ssl: false
 
-# License file contents
-dflicense:
-license:
+existingLicenseSecret:
+# Must have the key:
+#   cosmos.slc
+
+dc12license:
 # Example License Config
-#license: |
+#dc12license: |
 #  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 #
 #  <!-- Do not modify this file.  It is digitally signed. -->
