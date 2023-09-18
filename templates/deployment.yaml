@@ -44,6 +44,9 @@ spec:
       nodeSelector:
         {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
+      tolerations:
+        {{ toYaml .Values.vectorhWorker.tolerations | indent 8 | trim }}
+      {{- end }}      
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
