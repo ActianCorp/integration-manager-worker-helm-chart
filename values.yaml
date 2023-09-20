@@ -14,6 +14,10 @@ dcOdbcImagePullPolicy: IfNotPresent
 namespaced:
 revisionHistoryLimit: 10
 resultsQueue: JOB_RESULTS
+tolerations:
+  # - key: "example-key"
+  #   operator: "Exists"
+  #   effect: "NoSchedule"
 affinity: {}
 #   affinity:
 #     podAntiAffinity:
