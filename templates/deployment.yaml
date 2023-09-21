@@ -44,6 +44,10 @@ spec:
       nodeSelector:
         {{ .Values.nodeSelector | toYaml | indent 8 | trim }}
       {{- end }}
+      {{- if .Values.tolerations }}  
+      tolerations:
+        {{ .Values.tolerations | toYaml | indent 8 | trim }}
+      {{- end }}     
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
