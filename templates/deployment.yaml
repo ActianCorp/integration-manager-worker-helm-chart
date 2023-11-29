@@ -114,6 +114,10 @@ spec:
           value: /etc/secrets/gcp/gcp-secret
         - name: JDBC_LIB_PATH
           value: /opt/Actian/lib/jdbc
+        - name: DP_SVC_STATS_ENDPOINT
+          value: {{ .Values.dpServiceStatsEndpoint }}
+        - name: DP_SVC_APIKEY
+          value: /etc/secrets/dc/dp-api-key
         ports:
         - containerPort: 5000
         lifecycle:
@@ -168,6 +172,11 @@ spec:
         - name: datacloud-jdbc-avalanche-vol
           mountPath: /opt/Actian/lib/jdbc
           readOnly: false
+        {{- if .Values.existingDCSecret }}
+        - name: dc-secrets-volume
+          readOnly: true
+          mountPath: /etc/secrets/dc
+        {{- end }}
 
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
@@ -245,6 +254,11 @@ spec:
         {{- else }}
         emptyDir: {}
         {{- end }}
+      {{- if .Values.existingDCSecret }}
+      - name: dc-secrets-volume
+        secret:
+          secretName: {{ .Values.existingDCSecret }}
+      {{- end }}
 
       {{- if .Values.extraVolumes }}
       {{ .Values.extraVolumes | toYaml | indent 6 | trim }}
