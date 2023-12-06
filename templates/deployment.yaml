@@ -103,6 +103,16 @@ spec:
           mountPath: /opt/Actian/Actian_Client
         - name: datacloud-jdbc-avalanche-vol
           mountPath: /opt/Actian/lib/jdbc
+        - name: datacloud-odbc-redshift-vol
+          mountPath: /opt/amazon
+        - name: datacloud-odbc-snowflakes-vol
+          mountPath: /usr/lib64/snowflake
+        - name: datacloud-odbc-sql-vol
+          mountPath: /opt/microsoft
+        - name: datacloud-odbc-mssql-vol
+          mountPath: /opt/mssql-tools
+        - name: datacloud-odbc-ini-vol
+          mountPath: /opt/odbc-ini  
       containers:
       - name: worker
         image: {{ .Values.image }}
@@ -114,6 +124,14 @@ spec:
           value: /etc/secrets/gcp/gcp-secret
         - name: JDBC_LIB_PATH
           value: /opt/Actian/lib/jdbc
+        - name: ODBCINI
+          value: /opt/odbc-ini/odbc.ini
+        - name: ODBCSYSINI
+          value: /opt/odbc-ini
+        - name: SNOWFLAKEODBCINI
+          value: /usr/lib64/snowflake/odbc/lib/simba.snowflake.ini
+        - name: AMAZONREDSHIFTODBCINI
+          value: /opt/amazon/redshiftodbc/lib/64/amazon.redshiftodbc.ini     
         ports:
         - containerPort: 5000
         lifecycle:
@@ -168,7 +186,21 @@ spec:
         - name: datacloud-jdbc-avalanche-vol
           mountPath: /opt/Actian/lib/jdbc
           readOnly: false
-
+        - name: datacloud-odbc-redshift-vol
+          mountPath: /opt/amazon
+          readOnly: false
+        - name: datacloud-odbc-snowflakes-vol
+          mountPath: /usr/lib64/snowflake
+          readOnly: false
+        - name: datacloud-odbc-sql-vol
+          mountPath: /opt/microsoft
+          readOnly: false
+        - name: datacloud-odbc-mssql-vol
+          mountPath: /opt/mssql-tools
+          readOnly: false
+        - name: datacloud-odbc-ini-vol
+          mountPath: /opt/odbc-ini
+          readOnly: false 
         {{- if .Values.extraVolumeMounts }}
         {{ .Values.extraVolumeMounts | toYaml | indent 8 | trim }}
         {{- end }}
@@ -231,6 +263,16 @@ spec:
         emptyDir: {}
       - name: datacloud-jdbc-avalanche-vol
         emptyDir: {}
+      - name: datacloud-odbc-redshift-vol
+        emptyDir: {}
+      - name: datacloud-odbc-snowflakes-vol
+        emptyDir: {}
+      - name: datacloud-odbc-sql-vol
+        emptyDir: {}
+      - name: datacloud-odbc-mssql-vol
+        emptyDir: {}
+      - name: datacloud-odbc-ini-vol
+        emptyDir: {}    
       - name: tmp
         emptyDir: {}
       - name: job-workspace
