@@ -161,7 +161,7 @@ dfEngineImage: actian/dataflow-engine:7.0.2-51
 dfEngineImagePullPolicy: IfNotPresent
 dfEngineSecurityContext: {}
 
-linkEngineImage: actian/link-flow-command-server-standalone-installer:10.9.9.9_911
+linkEngineImage: actian/link-flow-command-server-standalone-installer:10.9.9.9_c1438_a2353
 linkEngineImagePullPolicy: IfNotPresent
 linkEngineSecurityContext: {}
 #  # capabilities:
