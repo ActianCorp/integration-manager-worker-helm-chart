@@ -227,13 +227,6 @@ spec:
       - name: worker-shared-volume
         configMap:
           name: {{ template "integration-manager-worker.fullname" . }}
-      - name: secret-volume
-        secret:
-          {{- if .Values.existingSecret }}
-          secretName: {{ .Values.existingSecret }}
-          {{- else }}
-          secretName: {{ template "integration-manager-worker.fullname" . }}
-          {{- end }}
       {{- if .Values.existingRabbitSecret }}
       - name: amqp-secret-volume
         secret:
