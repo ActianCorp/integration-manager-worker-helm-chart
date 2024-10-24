@@ -30,6 +30,7 @@ affinity: {}
 #           topologyKey: kubernetes.io/hostname
 livenessProbe:
   httpGet:
+    scheme: HTTP
     path: /worker/health
     port: 5000
   initialDelaySeconds: 120
