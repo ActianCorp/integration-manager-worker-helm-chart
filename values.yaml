@@ -29,15 +29,15 @@ affinity: {}
 #               app: integration-manager-worker
 #           topologyKey: kubernetes.io/hostname
 livenessProbe:
+  httpGet:
+    scheme: HTTP
+    path: /worker/health
+    port: 5000
   initialDelaySeconds: 120
   periodSeconds: 10
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 3
-  exec:
-    command:
-      - curl
-      - http://localhost:5000/worker/health
 existingRabbitSecret:
 # Must have the keys:
 #   rabbitmq-host
