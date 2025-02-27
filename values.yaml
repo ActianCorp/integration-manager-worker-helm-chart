@@ -14,7 +14,7 @@ dcOdbcImagePullPolicy: IfNotPresent
 namespaced:
 revisionHistoryLimit: 10
 resultsQueue: JOB_RESULTS
-javaOpts: /opt/Actian/engine/runtime/di9/jars/opt/client-sdk-local
+javaOpts: -Dloader.path=/opt/Actian/engine/runtime/di9/jars/opt/client-sdk-local
 tolerations: []
   # - key: "example-key"
   #   operator: "Exists"
