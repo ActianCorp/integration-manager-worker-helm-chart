@@ -131,7 +131,11 @@ spec:
         - name: SNOWFLAKEODBCINI
           value: /usr/lib64/snowflake/odbc/lib/simba.snowflake.ini
         - name: AMAZONREDSHIFTODBCINI
-          value: /opt/amazon/redshiftodbc/lib/64/amazon.redshiftodbc.ini     
+          value: /opt/amazon/redshiftodbc/lib/64/amazon.redshiftodbc.ini
+        {{- range .Values.extraEnvVars }}
+        - name: {{ .name }}
+          value: {{ .value }}
+        {{- end }}
         ports:
         - containerPort: 5000
         lifecycle:
