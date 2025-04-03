@@ -14,6 +14,7 @@ dcOdbcImagePullPolicy: IfNotPresent
 namespaced:
 revisionHistoryLimit: 10
 resultsQueue: JOB_RESULTS
+extraEnvVars: []
 tolerations: []
   # - key: "example-key"
   #   operator: "Exists"

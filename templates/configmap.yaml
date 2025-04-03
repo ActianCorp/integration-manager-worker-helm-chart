@@ -31,7 +31,6 @@ data:
     # Worker configuration
     worker.concurrency={{ .Values.concurrency }}
     worker.destinationId={{ .Values.destinationId }}
-    worker.engineJavaHome=${sharedDataPath}/engine/jre
     worker.libraryPath=/opt/Actian/lib
     worker.workerLocalDir=${sharedDataPath}/local/work
     worker.api.port=5000
@@ -51,7 +50,6 @@ data:
     # Engine Configuration (for this Worker)
     engine.iniFilePath=${sharedDataPath}/conf/cosmos.ini
     engine.licensePath=${sharedDataPath}/volume/cosmos.slc
-    engine.localEngineInstallPath=${sharedDataPath}/engine/runtime/di9
     engine.localEngineListenerPort=4999
     engine.localEngineRemoteJvmArgs=-Xms64m -Xmx1g
     engine.allowAllExecutables=false
