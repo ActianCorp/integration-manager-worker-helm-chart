@@ -81,6 +81,16 @@ spec:
         volumeMounts:
         - name: dataflow-engine-vol
           mountPath: /opt/Actian/dataflow
+      - name: oneconnector-engine
+        image: {{ .Values.ocEngineImage }}
+        imagePullPolicy: {{ .Values.ocEngineImagePullPolicy }}
+        command: ["/bin/sh","-c"]
+        args: ["chmod +x script.sh && ./script.sh"]
+        securityContext:
+          {{- toYaml .Values.ocEngineSecurityContext | nindent 10 }}
+        volumeMounts:
+        - name: oneconnector-engine-vol
+          mountPath: /opt/Actian/oneconnector
         {{- if .Values.logstream.enabled }}
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
@@ -165,6 +175,9 @@ spec:
         - name: dataflow-engine-vol
           mountPath: /opt/Actian/dataflow
           readOnly: false
+        - name: oneconnector-engine-vol
+          mountPath: /opt/Actian/oneconnector
+          readOnly: false
         - name: link-engine-vol
           mountPath: /opt/link/flowcmdserver_standalone_installation
           readOnly: false
@@ -235,6 +248,8 @@ spec:
       - name: dataconnect-engine-vol
         emptyDir: {}
       - name: dataflow-engine-vol
+        emptyDir: {}
+      - name: oneconnector-engine-vol
         emptyDir: {}
       - name: link-engine-vol
         emptyDir: {}
