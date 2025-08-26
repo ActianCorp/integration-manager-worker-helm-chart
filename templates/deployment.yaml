@@ -81,7 +81,6 @@ spec:
         volumeMounts:
         - name: dataflow-engine-vol
           mountPath: /opt/Actian/dataflow
-        {{- if .Values.logstream.enabled }}
       - name: oneconnector-engine
         image: {{ .Values.ocEngineImage }}
         imagePullPolicy: {{ .Values.ocEngineImagePullPolicy }}
@@ -90,8 +89,8 @@ spec:
         securityContext:
           {{- toYaml .Values.ocEngineSecurityContext | nindent 10 }}
         volumeMounts:
-        - name: dataflow-engine-vol
-          mountPath: /opt/Actian/dataflow
+        - name: oneconnector-engine-vol
+          mountPath: /opt/Actian/oneconnector
         {{- if .Values.logstream.enabled }}
       - name: init-enginelog
         image: {{ .Values.busybox.image.repository}}:{{ .Values.busybox.image.tag}}
